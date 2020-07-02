@@ -1,15 +1,21 @@
 import { Shader, ShaderType } from "./shader";
 import { ClientGame } from "../client/client-game";
+import { Transform } from "../common/entity/entity";
 
 export class Program {
   vertexShader: Shader;
   fragmentShader: Shader;
   game: ClientGame;
   program?: WebGLProgram;
-  constructor(game: ClientGame) {
+
+  constructor(game: ClientGame, transform: Transform) {
     this.game = game;
-    this.vertexShader = new Shader(game, ShaderType.VERTEX);
-    this.fragmentShader = new Shader(game, ShaderType.FRAGMENT);
+    this.vertexShader = new Shader(game, ShaderType.VERTEX, transform);
+    this.fragmentShader = new Shader(game, ShaderType.FRAGMENT, transform);
+  }
+
+  getUniform(name: string): WebGLUniformLocation | null {
+    return this.game.gl.getUniformLocation(this.program!, name);
   }
 
   compile(): Program {

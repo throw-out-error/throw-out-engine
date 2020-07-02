@@ -3,13 +3,13 @@ import { Player } from "../common/entity/player";
 import { Entity } from "../common/entity/entity";
 import { Mesh } from "../mesh/mesh";
 import { Program } from "../shader/program";
+import { Tensor } from "@throw-out-error/throw-out-utils";
 
 export class ClientGame implements Game {
-  player?: Player;
+  player!: Player;
   private entities: Map<string, Entity>;
   canvas: HTMLCanvasElement;
   gl!: WebGLRenderingContext;
-  program!: Program;
   private running = false;
   mesh!: Mesh;
 
@@ -21,10 +21,6 @@ export class ClientGame implements Game {
   }
 
   getWorld(): World {
-    if (!this.player)
-      throw new Error(
-        "The current player has not yet been assigned. Maybe the player has not joined a game yet.",
-      );
     console.trace("This feature has not been implemented yet.");
     return new World();
   }
@@ -44,12 +40,12 @@ export class ClientGame implements Game {
 
     this.gl = gl;
 
-    this.program = new Program(this).compile();
-    this.program.bind();
-    this.mesh = new Mesh(this);
+    this.player = new Player(this, "test");
+    this.player.transform.position = Tensor.from(0, 0, 0);
+    this.mesh = new Mesh(this, this.player);
 
     this.running = true;
-    this.render();
+    this.render.bind(this)();
   }
 
   render() {
@@ -58,14 +54,15 @@ export class ClientGame implements Game {
       this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
       this.update();
-      this.mesh.render.bind(this);
-      
+      this.mesh.render();
+      this.player.transform.rotation.y = 0.1;
+
       requestAnimationFrame(this.render.bind(this));
     }
   }
 
   update() {
-    for(let e of this.entities.values()) {
+    for (let e of this.entities.values()) {
       e.update();
     }
   }
@@ -108,10 +105,10 @@ export class ClientGame implements Game {
     return p;
   }
 
-  setBuffer(buf: WebGLBuffer, name: string) {
+  setBuffer(program: Program, buf: WebGLBuffer, name: string) {
     const { gl } = this;
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    let loc = gl.getAttribLocation(this.program.program!, name);
+    let loc = gl.getAttribLocation(program.program!, name);
     gl.vertexAttribPointer(loc, 3, gl.FLOAT, false, 4 * 3, 0);
     gl.enableVertexAttribArray(loc);
   }

@@ -2,23 +2,23 @@
 # yarn lockfile v1
 
 
-"@throw-out-error/throw-out-utils@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@throw-out-error/throw-out-utils/-/throw-out-utils-1.1.0.tgz#ce19425b7d988121f0486e89fd4fec9d8aac43e9"
-  integrity sha512-NDumEFVaWsWQ0hTEpCYBMcJUCsRP16BFFGJ009DXY1IUouNtzZZUoH+68rLz8sbBvLk2OmUb0xD6JAj4UvIL0Q==
+"@throw-out-error/throw-out-utils@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@throw-out-error/throw-out-utils/-/throw-out-utils-1.1.1.tgz#b09df8b2fe8fbca41dc66c57f17b8f8440c596f8"
+  integrity sha512-kiPFsXr8FFR1LuRTRbXpcSGWjhDU0uyeVYMWGjsxXHylHOm/OzymW/XAV/AjDfZdfO+4CyBKKekdpeTKtdL+WA==
   dependencies:
-    "@types/assert" "^1.4.7"
-    "@types/node" "^14.0.11"
+    "@types/assert" "^1.5.1"
+    "@types/node" "^14.0.14"
     "@types/treeify" "^1.0.0"
     assert "^2.0.0"
     treeify "^1.1.0"
 
-"@types/assert@^1.4.7":
+"@types/assert@^1.5.1":
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/@types/assert/-/assert-1.5.1.tgz#9c4b57935d446ffcfb31d583799c47272161e270"
   integrity sha512-W34OXyUAXEg0IvkMBr6WHTsvxh4veqNVJJGni/6pp13BabT/nuiEtUVkf+EYo8FIT4CQSVYfZ05XtUo5nRSWfQ==
 
-"@types/node@^14.0.11":
+"@types/node@^14.0.14":
   version "14.0.14"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.14.tgz#24a0b5959f16ac141aeb0c5b3cd7a15b7c64cbce"
   integrity sha512-syUgf67ZQpaJj01/tRTknkMNoBBLWJOBODF0Zm4NrXmiSuxjymFrxnTu1QVYRubhVkRcZLYZG8STTwJRdVm/WQ==

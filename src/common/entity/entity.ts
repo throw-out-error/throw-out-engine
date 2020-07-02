@@ -9,14 +9,14 @@ export abstract class Entity {
 
   constructor(game: Game) {
     this.game = game;
-    this.transform = new Transform();
+    this.transform = Transform.create();
     this.id = cuid();
   }
 
   getGame(): Game {
     return this.game;
   }
-
+  
   abstract update(): void;
 }
 
@@ -26,11 +26,23 @@ export class Transform {
   scale: Tensor<Vector>;
 
   /**
-   * Creates a transform filled with zeroes.
+   * Creates an empty transform filled with zeroes.
    */
-  constructor() {
-    this.position = Tensor.VECTOR_ZERO.clone();
-    this.rotation = Tensor.VECTOR_ZERO.clone();
-    this.scale = Tensor.VECTOR_ZERO.clone();
+  static create(): Transform {
+    return new Transform(
+      Tensor.VECTOR_ZERO.clone(),
+      Tensor.VECTOR_ZERO.clone(),
+      Tensor.VECTOR_ZERO.clone(),
+    );
+  }
+
+  constructor(pos: Tensor<Vector>, rot: Tensor<Vector>, scale: Tensor<Vector>) {
+    this.position = pos;
+    this.rotation = rot;
+    this.scale = scale;
+  }
+
+  clone(): Transform {
+    return new Transform(this.position, this.rotation, this.scale);
   }
 }

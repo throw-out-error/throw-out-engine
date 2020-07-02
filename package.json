@@ -8,7 +8,7 @@
     "start": "serve ."
   },
   "dependencies": {
-    "@throw-out-error/throw-out-utils": "^1.1.0",
+    "@throw-out-error/throw-out-utils": "^1.1.1",
     "cuid": "^2.1.8"
   },
   "devDependencies": {

@@ -1,4 +1,5 @@
 import { ClientGame } from "../client/client-game";
+import { Transform } from "../common/entity/entity";
 
 export enum ShaderType {
   VERTEX,
@@ -10,21 +11,24 @@ export class Shader {
   shaderText: string;
   type: ShaderType;
   game: ClientGame;
+  transform: Transform;
 
-  constructor(game: ClientGame, type: ShaderType) {
+  constructor(game: ClientGame, type: ShaderType, transform: Transform) {
     this.game = game;
     this.type = type;
+    this.transform = transform;
     if (type === ShaderType.VERTEX) {
       this.shaderText = `
       precision mediump float;
-
-      attribute vec2 vertPosition;
+      uniform vec4 translation;
+      uniform mat4 movMatrix;
+      attribute vec3 vertPosition;
       attribute vec3 vertColor;
       varying vec3 fragColor;
       
       void main() {
         fragColor = vertColor;
-        gl_Position = vec4(vertPosition, 0.0, 1.0);
+        gl_Position = movMatrix * vec4(vertPosition, 1.0) + translation;
       }
       `;
     } else {
