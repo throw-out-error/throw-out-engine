@@ -1,26 +1,23 @@
 import { Shader, ShaderType } from "./shader";
-import { Game } from "../game";
+import { ClientGame } from "../client/client-game";
 
 export class Program {
   vertexShader: Shader;
   fragmentShader: Shader;
-  game: Game;
+  game: ClientGame;
   program?: WebGLProgram;
-  constructor(game: Game) {
+  constructor(game: ClientGame) {
     this.game = game;
     this.vertexShader = new Shader(game, ShaderType.VERTEX);
     this.fragmentShader = new Shader(game, ShaderType.FRAGMENT);
   }
 
   compile(): Program {
-    const { gl } = this.game;
-    let vShader= this.vertexShader.compile();
+    const { gl, createProgram } = this.game;
+    let vShader = this.vertexShader.compile();
     let fShader = this.fragmentShader.compile();
 
-    this.program = gl.createProgram()!;
-    gl.attachShader(this.program, vShader);
-    gl.attachShader(this.program, fShader);
-    gl.linkProgram(this.program);
+    this.program = createProgram.bind(this.game)([vShader, fShader]);
 
     if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
       console.error(
@@ -40,5 +37,9 @@ export class Program {
     }
 
     return this;
+  }
+
+  bind() {
+    this.game.gl.useProgram(this.program!);
   }
 }

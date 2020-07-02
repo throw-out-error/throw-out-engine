@@ -1,12 +1,23 @@
-import { Game } from "../game";
+import { Game } from "../world";
 import { Tensor, Vector } from "@throw-out-error/throw-out-utils";
-export class Entity {
-  game: Game;
+import cuid from "cuid";
+
+export abstract class Entity {
+  protected game: Game;
   transform: Transform;
+  id: string;
+
   constructor(game: Game) {
     this.game = game;
     this.transform = new Transform();
+    this.id = cuid();
   }
+
+  getGame(): Game {
+    return this.game;
+  }
+
+  abstract update(): void;
 }
 
 export class Transform {
