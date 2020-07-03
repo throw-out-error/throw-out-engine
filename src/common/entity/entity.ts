@@ -16,7 +16,7 @@ export abstract class Entity {
   getGame(): Game {
     return this.game;
   }
-  
+
   abstract update(): void;
 }
 
@@ -32,7 +32,7 @@ export class Transform {
     return new Transform(
       Tensor.VECTOR_ZERO.clone(),
       Tensor.VECTOR_ZERO.clone(),
-      Tensor.VECTOR_ZERO.clone(),
+      Tensor.from(1, 1, 1),
     );
   }
 

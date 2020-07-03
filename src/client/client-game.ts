@@ -52,10 +52,15 @@ export class ClientGame implements Game {
     if (this.running) {
       this.gl.clearColor(0.75, 0.85, 0.8, 1.0);
       this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-
+      this.gl.enable(this.gl.DEPTH_TEST);
+      this.gl.depthFunc(this.gl.LEQUAL);
+      this.gl.clearDepth(1);
+      
       this.update();
       this.mesh.render();
-      this.player.transform.rotation.y = 0.1;
+
+      this.player.transform.rotation.y = 0.01;
+      this.player.transform.scale.sub(0.001);
 
       requestAnimationFrame(this.render.bind(this));
     }

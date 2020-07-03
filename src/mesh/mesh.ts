@@ -110,18 +110,43 @@ export class Mesh {
 
   render() {
     const { gl } = this.game;
-    const { position, rotation } = this.entity.transform;
+    const { position, rotation, scale } = this.entity.transform;
     let translation = this.program.getUniform("translation");
     let movMatrix = this.program.getUniform("movMatrix");
+    let scaleMatrix = this.program.getUniform("scaleMatrix");
 
-    gl.uniform4f(translation, position.x, position.y, position.z, 1.0);
+    gl.uniform3fv(translation, position.toFloatArray());
 
     // Rotation
     rotateX(this.movMatrix, rotation.x);
     rotateY(this.movMatrix, rotation.y);
     rotateZ(this.movMatrix, rotation.z);
-    
+
     gl.uniformMatrix4fv(movMatrix, false, this.movMatrix.toFloatArray());
+
+    // Scale
+    gl.uniformMatrix4fv(
+      scaleMatrix,
+      false,
+      new Float32Array([
+        scale.x,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        scale.y,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        scale.z,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+      ]),
+    );
     this.geometry.draw();
   }
 }

@@ -20,15 +20,16 @@ export class Shader {
     if (type === ShaderType.VERTEX) {
       this.shaderText = `
       precision mediump float;
-      uniform vec4 translation;
+      uniform vec3 translation;
       uniform mat4 movMatrix;
+      uniform mat4 scaleMatrix;
       attribute vec3 vertPosition;
       attribute vec3 vertColor;
       varying vec3 fragColor;
       
       void main() {
         fragColor = vertColor;
-        gl_Position = movMatrix * vec4(vertPosition, 1.0) + translation;
+        gl_Position = scaleMatrix * movMatrix * vec4(vertPosition, 1.0) + vec4(translation, 0.0);
       }
       `;
     } else {
